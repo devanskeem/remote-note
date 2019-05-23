@@ -1,0 +1,27 @@
+.Header{
+    height: 70px;
+    width: 100%;
+    background: #3b3b3b;
+    border-bottom: 1px solid grey;
+}
+
+.search{
+    height: 75px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+#searchbar{
+    margin-bottom: 3px;
+    height: 45px;
+    width: 735px;
+    border-radius: 9px;
+    background: #2b2b2b;
+    border: none;
+    font-size: 22px;
+    padding: 0 10px;
+    background-size: 40px;
+    /* background-image: url('https://cdn1.iconfinder.com/data/icons/hawcons/32/698627-icon-111-search-512.png');
+    background-repeat: no-repeat;
+    background-position: right; */
+}

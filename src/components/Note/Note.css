@@ -1,0 +1,15 @@
+.Note{
+    height: 100%;
+    width: 300px;
+    word-wrap: break-word;
+    border-radius: 8px;
+    margin: 8px;
+    border: 1px solid black;
+    background: #3b3b3b;
+}
+
+.contents{
+    margin: 5px;
+    color: lightgrey;
+    padding-bottom: 25px;
+}
