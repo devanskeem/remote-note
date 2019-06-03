@@ -1,5 +1,24 @@
 .Todo{
-    height: 250px;
-    width: 200px;
-    background: lightblue;
+    width: 300px;
+    word-wrap: break-word;
+    border-radius: 2px;
+    margin: 5px;
+    border: 1px solid rgba(10,10,10, .5);
+    background: rgba(25, 25, 25, .5);
+    box-shadow: 1px 1px 5px 1px rgba(10, 10, 10, .1);
+}
+
+.Todo h3{
+    margin: 1px;
+}
+
+.contents{
+    margin: 5px;
+    color: lightgrey;
+    padding-bottom: 25px;
+}
+
+.Todo:hover{
+    /* box-shadow: 1px 1px 5px 3px rgba(10, 10, 10, .4); */
+    background: rgba(10, 10, 10, .2);
 }

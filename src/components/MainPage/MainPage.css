@@ -1,0 +1,12 @@
+.MainPage{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: #3b3b3b;
+  }
+  
+  .main-body{
+    display: flex;
+    flex-direction: row-reverse;
+    height: 100%;
+  }

@@ -1,11 +1,15 @@
 import React from 'react';
 import './App.css';
-import Dashboard from './components/Dashboard/Dashboard'
+import LandingPage from './components/LandingPage/LandingPage'
+import {HashRouter} from 'react-router-dom'
+import routes from './routes'
 function App() {
   return (
-    <div className="App">
-      <Dashboard/>
-    </div>
+    <HashRouter>
+      <div className="App">
+        {routes}
+      </div>
+    </HashRouter>
   );
 }
 

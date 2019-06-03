@@ -1,11 +1,15 @@
 .Header{
     height: 70px;
-    width: 100%;
+    width: 100vw;
     background: #3b3b3b;
-    border-bottom: 1px solid grey;
+    border-bottom: 2px solid grey;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .search{
+    width: 740px;
     height: 75px;
     display: flex;
     justify-content: space-evenly;
@@ -24,4 +28,12 @@
     /* background-image: url('https://cdn1.iconfinder.com/data/icons/hawcons/32/698627-icon-111-search-512.png');
     background-repeat: no-repeat;
     background-position: right; */
+}
+
+.logo{
+    display: flex;
+    justify-content: center;
+    width: 200px;
+    color: lightgrey;
+    font-size: 30px;
 }

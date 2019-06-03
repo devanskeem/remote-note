@@ -1,11 +1,14 @@
 .Note{
-    height: 100%;
     width: 300px;
     word-wrap: break-word;
-    border-radius: 8px;
-    margin: 8px;
-    border: 1px solid black;
-    background: #3b3b3b;
+    border-radius: 1px;
+    margin: 5px;
+    background: rgba(25, 25, 25, .5);
+    box-shadow: 1px 1px 5px 1px rgba(10, 10, 10, .1);
+}
+
+.Note h3{
+    margin: 1px;
 }
 
 .contents{
@@ -13,3 +16,23 @@
     color: lightgrey;
     padding-bottom: 25px;
 }
+
+.card-header{
+    height: 50px;
+    background: royalblue;
+    display: flex;
+    align-items: center;
+
+}
+
+.card-header h1{
+    margin: 0 0 0 5px;
+    font-size: 25px;
+    color: white;
+}
+
+.Note:hover{
+    /* box-shadow: 1px 1px 5px 3px rgba(10, 10, 10, .4); */
+    background: rgba(10, 10, 10, .2);
+}
+

@@ -1,0 +1,14 @@
+.LandingPage {
+    background: red;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.login{
+    height: 500px;
+    width: 250px;
+    background: white;
+    
+}
