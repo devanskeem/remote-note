@@ -5,7 +5,7 @@ export class Sidebar extends Component {
         return (
             <div className='Sidebar'>
                 <div className="buttons">
-                    <button id="new">NEW</button>
+                    <button id="new" onClick={this.props.toggleModal}>NEW</button>
                     <div className="line"></div>
                     <button>ALL</button>
                     <button>NOTES</button>

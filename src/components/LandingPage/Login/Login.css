@@ -1,0 +1,34 @@
+.Login {
+    background: whitesmoke;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+}
+
+.login-form{
+    height: 250px;
+    width: 250px;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    border: 1px solid royalblue;
+
+}
+
+.login-form form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-form input{
+    background: white;
+    border: 1px solid black;
+    border-radius: 3px;
+    margin: 5px;
+}

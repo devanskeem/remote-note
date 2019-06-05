@@ -11,3 +11,7 @@
   flex-direction: row-reverse;
   height: 100%;
 }
+
+*:focus{
+  outline: none;
+}

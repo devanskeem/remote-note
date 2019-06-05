@@ -5,7 +5,7 @@ module.exports = {
         const db = req.app.get('db')
         const {session} = req
         const userFound = await  db.check_username({username})
-        if (userFound[0]) return res.status(409).send('Username already exists')
+        if (userFound[0]) return res.status(401).send('Username already exists')
         const salt = bcrypt.genSaltSync(10);
         const hash = bcrypt.hashSync(password, salt)
         const createdUser = await db.register_user({
@@ -19,10 +19,12 @@ module.exports = {
     },
     login: async (req, res) => {
         const {username, password} = req.body;
+        console.log('req.body', req.body)
         const db = req.app.get('db')
         const {session} = req
+        console.log(username)
         const userFound = await db.check_username({username})
-        if (!userFound[0]) return res.status(402).send('Username not found')
+        if (!userFound[0]) return res.status(401).send('Username not found')
         const authenticated = bcrypt.compareSync(password, userFound[0].password)
         if (authenticated) {
             session.user = {id: userFound[0].user_id, username}
@@ -30,10 +32,19 @@ module.exports = {
         } else {
             return res.status(401).send('Invalid Credentials')
         }
+    },
+    logout: (req, res) => {
+        req.session.destroy()
+        res.sendStatus(200)
+    },
+    getUserData: async (req, res) => {
+        const db = req.app.get('db')
+        const {user} = req.session
+        if (user) {
+            const data = await db.get_user_data({ user_id: user.id })
+            return res.status(200).send(data[0])
+        }
+        return res.status(401).send('Please Log In')
     }
-    // getAll: async (req, res) => {
-    //     const db = req.app.get('db')
-    //     const allData = db.getAllData(req.session.user.id)
-    //     res.status(200).send(allData)
-    // }
 }
+

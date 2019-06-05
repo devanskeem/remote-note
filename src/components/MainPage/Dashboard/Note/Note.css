@@ -1,10 +1,11 @@
 .Note{
     width: 300px;
     word-wrap: break-word;
-    border-radius: 1px;
+    border-radius: 5px;
     margin: 5px;
     background: rgba(25, 25, 25, .5);
     box-shadow: 1px 1px 5px 1px rgba(10, 10, 10, .1);
+    border: 1px solid grey;
 }
 
 .Note h3{
@@ -15,20 +16,6 @@
     margin: 5px;
     color: lightgrey;
     padding-bottom: 25px;
-}
-
-.card-header{
-    height: 50px;
-    background: royalblue;
-    display: flex;
-    align-items: center;
-
-}
-
-.card-header h1{
-    margin: 0 0 0 5px;
-    font-size: 25px;
-    color: white;
 }
 
 .Note:hover{
