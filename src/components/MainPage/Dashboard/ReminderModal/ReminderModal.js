@@ -1,15 +1,16 @@
 import React, { Component } from 'react'
-import './NoteModal.css'
+import './ReminderModal.css'
 import axios from 'axios'
 import { connect } from 'react-redux';
-import { updateNotes, updateCurrentDisplay } from '../../../../redux/dataReducer'
+import { updateNotes, updateReminders } from '../../../../redux/dataReducer'
+import DateTimePicker from "react-datetime-picker";
 export class NoteModal extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
             title: '',
-            content: '',
+            remind_date: new Date(),
             show: false,
             closeButton: 'Close'
         }
@@ -18,7 +19,7 @@ export class NoteModal extends Component {
         this.setState({
             [e.target.name]: e.target.value
         })
-        if (this.state.title || this.state.content){
+        if (this.state.title || this.state.content) {
             this.setState({
                 closeButton: 'Save'
             })
@@ -26,44 +27,46 @@ export class NoteModal extends Component {
     }
 
     handleSave = () => {
-        this.props.toggleNoteModal()
-
-        if (this.state.title || this.state.content){
+        this.props.toggleReminderModal()
+        if (this.state.title) {            
             const { user_id } = this.props.userReducer
-            const { title, content } = this.state
-            axios.post('/notes/add', { user_id: user_id, title, content }).then((res) => {
-                let { notes, reminders, todos } = this.props.dataReducer
-                this.props.updateNotes(res.data)
-                this.props.updateCurrentDisplay(notes)     
-                console.log('this.props.dataReducer', this.props.dataReducer)
-            })
-                .catch(err => console.log(err))
+            const { title, remind_date } = this.state
+            axios.post('/reminders/add', { user_id, title, remind_date }).then((res) => {
+                const {notes, reminders, todos} = this.props.dataReducer
+                console.log(notes, reminders, todos)
+                console.log(this.props)
+                console.log([...reminders, res.data[0]])
+                this.props.updateDisplay(notes, [...reminders, res.data[0]], todos)
+            }).catch(err => console.log('error:', err))
         }
 
         this.setState({
             title: '',
-            content: '',
+            remind_date: new Date(),
         })
     }
-    handleChildClick = (e) => {
-        e.stopPropagation()
+
+    onDateChange = remind_date => {
+        this.setState({ remind_date })
     }
+
     render() {
         return (
-            <div className="modal-background"onClick={this.handleSave}>
-                <div className='NoteModal' onClick={this.handleChildClick}>
+            <div className="modal-background">
+                <div className='ReminderModal'>
                     <section className="title">
                         <textarea value={this.state.title} name="title" type="text" className="title-input" placeholder='Title' onChange={this.handleInputChange} />
                     </section>
 
-                    <section className="content">
-                        <textarea value={this.state.content} name="content" type="text" className="content-input" placeholder='Note' onChange={this.handleInputChange} />
-                    </section>
-
-                    <section className="note-btns">
+                    <DateTimePicker 
+                        onChange={this.onDateChange}
+                        value={this.state.remind_date}
+                        disableClock={true}
+                    />
+                    
+                    <section className="reminder-btns">
                         <div className="left-btns">
                             <button className="color-btn">change color</button>
-                            <button className="image-btn">add image</button>
                             <button className="delete-btn">delete</button>
                         </div>
                         <div className="right-btns">
@@ -80,6 +83,6 @@ function mapStateToProps(reduxState) {
     return reduxState
 }
 
-const mapDispatchToProps = { updateNotes, updateCurrentDisplay }
+const mapDispatchToProps = { updateNotes, updateReminders }
 
 export default connect(mapStateToProps, mapDispatchToProps)(NoteModal)

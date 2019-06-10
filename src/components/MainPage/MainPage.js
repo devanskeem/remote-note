@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import './MainPage.css';
 import Dashboard from './Dashboard/Dashboard'
 import Header from './Header/Header'
@@ -7,28 +7,48 @@ import Sidebar from './Sidebar/Sidebar';
 class MainPage extends Component {
   constructor(props) {
     super(props)
-  
+
     this.state = {
-       showModal: false
+      showNoteModal: false,
+      showReminderModal: false,
+      showTodoModal: false
     }
   }
-  
-  toggleModal = () => {
+
+  toggleNoteModal = () => {
     this.setState({
-      showModal: !this.state.showModal
+      showNoteModal: !this.state.showNoteModal
     })
   }
 
-  render(){
+  toggleReminderModal = () => {
+    this.setState({
+      showReminderModal: !this.state.showReminderModal
+    })
+  }
+
+  toggleTodoModal = () => {
+    this.setState({
+      showTodoModal: !this.state.showTodoModal
+    })
+  }
+  render() {
     return (
       <div className="MainPage">
-          <header>
-              <Header/>
-          </header>
-          <section className="main-body">
-              <Dashboard toggleModal={this.toggleModal} showModal={this.state.showModal}/>
-              <Sidebar toggleModal={this.toggleModal}/>
-          </section>
+        <header>
+          <Header />
+        </header>
+        <section className="main-body">
+          <Dashboard 
+            toggleNoteModal={this.toggleNoteModal} 
+            showNoteModal={this.state.showNoteModal}
+            toggleReminderModal={this.toggleReminderModal} 
+            showReminderModal={this.state.showReminderModal} 
+            toggleTodoModal={this.toggleTodoModal} 
+            showTodoModal={this.state.showTodoModal} 
+           />
+          <Sidebar toggleNoteModal={this.toggleNoteModal} toggleReminderModal={this.toggleReminderModal} toggleTodoModal={this.toggleTodoModal}/>
+        </section>
       </div>
     );
   }

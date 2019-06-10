@@ -1,13 +1,14 @@
 const initialState = {
     notes: [],
     reminders: [],
-    todos: []
+    todos: [],
+    currentDisplay: []
 }
 
-const UPDATE_NOTES = "ADD_NOTES"
-const UPDATE_REMINDERS = "ADD_REMINDERS"
-const UPDATE_TODOS = "ADD_TODOS"
-
+const UPDATE_NOTES = "UPDATE__NOTES"
+const UPDATE_REMINDERS = "UPDATE_REMINDERS"
+const UPDATE_TODOS = "UPDATE_TODOS"
+const UPDATE_CURRENT_DISPLAY = "UPDATE_CURRENT_DISPLAY"
 
 export function updateReminders(reminders) {
     return {
@@ -28,6 +29,17 @@ export function updateNotes(notes) {
     }
 }
 
+export function updateCurrentDisplay(currentDisplay) {
+    console.log('current', currentDisplay)
+    const sorted = currentDisplay.sort((a, b) => {
+        return a.timestamp > b.timestamp ? -1 : 1
+    })
+    return {
+        type: UPDATE_CURRENT_DISPLAY,
+        payload: sorted
+    }
+}
+
 function dataReducer(state = initialState, action){
     switch (action.type) {
         case UPDATE_NOTES:
@@ -36,6 +48,8 @@ function dataReducer(state = initialState, action){
             return {...state, reminders: action.payload}
         case UPDATE_TODOS:
             return {...state, todos: action.payload}
+        case UPDATE_CURRENT_DISPLAY:
+            return {...state, currentDisplay: action.payload}
         default:
             return state
     }

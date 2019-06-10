@@ -5,22 +5,28 @@ import Note from './Note/Note'
 import Reminder from './Reminder/Reminder'
 import Todo from './Todo/Todo'
 import NoteModal from './NoteModal/NoteModal'
+import ReminderModal from './ReminderModal/ReminderModal';
+import TodoModal from './TodoModal/TodoModal';
 import {updateUser} from '../../../redux/userReducer'
-import {updateNotes, updateReminders} from '../../../redux/dataReducer'
+import {updateNotes, updateReminders, updateTodos, updateCurrentDisplay} from '../../../redux/dataReducer'
 import { connect } from 'react-redux';
 export class Dashboard extends Component {
     constructor(props) {
         super(props)
     
         this.state = {
-             currentDisplay: []
+             screenWidth: 1201,
         }
     }
-    componentDidUpdate(prevProps){
-        console.log('prevProps')
-       if (prevProps !== this.props) console.log('updating')
+    resize = () => {
+        this.setState({
+            screenWidth: window.innerWidth
+        })
     }
+
     componentDidMount() {
+        window.addEventListener('resize', this.resize)
+        console.log('this.props', this.props)
         axios.get('/auth/getUserData').then((res) => {
             this.props.updateUser(res.data)
             return res.data;
@@ -32,44 +38,110 @@ export class Dashboard extends Component {
             .then(res => {
                 this.props.updateReminders(res.data)
             })
+            .then(() => axios.get(`/todos/all/${data.user_id}`))
+            .then((res) => {
+                this.props.updateTodos(res.data)
+            })
             .then(() => {
                 let {notes, reminders, todos} = this.props.dataReducer
-                this.updateCurrentDisplay(notes, reminders, todos)
+                console.log('yooo',this.props)
+                this.props.updateCurrentDisplay([...notes, ...reminders, ...todos])
             })
             
         });
     }
 
-    updateCurrentDisplay = (notes, reminders, todos) => {
-        console.table(notes)
-        this.props.updateNotes(notes)
-        this.props.updateReminders(reminders)
-        const sorted = [...notes, ...reminders, ...todos].sort((a, b) => {
-            return a.timestamp > b.timestamp ? -1 : 1
-        })
-        this.setState({
-            currentDisplay: sorted
-        })        
-    }
+    // updateCurrentDisplay = (notes = this.props.dataReducer.notes, reminders = this.props.dataReducer.reminders, todos = this.props.dataReducer.todos) => {
+    //     this.props.updateNotes(notes)
+    //     this.props.updateReminders(reminders)
+    //     this.props.updateTodos(todos)
+        
+    //     this.setState({
+    //         currentDisplay: sorted 
+    //     }) 
+    // }
     //this function take in a column parameter between 1 and 3 and returns the jsx for that column
     getColumn(col){
-        const {currentDisplay} = this.state
+        const {currentDisplay} = this.props.dataReducer
         let column = currentDisplay.map((element, index) => {
-            if (index % 3 === (col - 1)){ //i used (column - 1) here because i am going by index not column
-                return <Note key={index} title={element.title} content={element.content}/>
+            if(this.state.screenWidth > 1200){
+                if (index % 3 === (col - 1)){ //i used (column - 1) here because i am going by index not column#
+                    if(element.note_id) return ( 
+                        <Note 
+                            key={element.note_id} 
+                            title={element.title} 
+                            content={element.content}
+                            noteId={element.note_id} 
+
+                        />)
+
+                    else if(element.reminder_id) return (
+                        <Reminder 
+                            key={element.reminder_id} 
+                            title={element.title} 
+                            content={element.content} 
+                            date={element.remind_date}
+                            reminderId={element.reminder_id} 
+
+                        />)
+
+                    else if(element.todo_id) return (
+                        <Todo 
+                            key={element.todo_id} 
+                            title={element.title} 
+                            todoId={element.todo_id} 
+                            items={element.items}
+                            toggleTodoModal={this.props.toggleTodoModal} 
+                            todoId={element.todo_id} 
+
+                        />)
+                }
+            } else if(col === 1){
+                    if(element.note_id) return( 
+                        <Note 
+                            key={element.note_id} 
+                            title={element.title} 
+                            content={element.content}
+                            noteId={element.note_id}
+                            />)
+
+                    else if(element.reminder_id) return( 
+                        <Reminder 
+                            key={element.reminder_id} 
+                            title={element.title} 
+                            content={element.content} 
+                            date={element.remind_date}
+                            reminderId={element.reminder_id} 
+
+                        />)
+
+                    else if(element.todo_id) return( 
+                        <Todo 
+                            key={element.reminder_id} 
+                            title={element.title} 
+                            todoId={element.todo_id} 
+                            items={element.items} 
+                            toggleTodoModal={this.props.toggleTodoModal} 
+                        />)
             }
         })
         return column;
     }
     render() {
-        {console.log(this.props.showModal)}
+        console.log(this.props)
         return (
             <div className='Dashboard'>
-                {this.props.showModal ? 
-                <NoteModal updateDisplay={this.updateCurrentDisplay} toggleModal={this.props.toggleModal}/> :
-                <>
-                
-                </>
+                {this.props.showNoteModal ? 
+                <NoteModal toggleNoteModal={this.props.toggleNoteModal}/> :
+                null
+                }
+                {this.props.showReminderModal ? 
+                <ReminderModal  toggleReminderModal={this.props.toggleReminderModal}/> :
+                null
+                }
+                {this.props.showTodoModal ? 
+                <TodoModal toggleTodoModal={this.props.toggleTodoModal}/> :
+                null
                 }
                 <section className="dashboard-content">
                     <section className="column">
@@ -90,6 +162,6 @@ function mapStateToProps(reduxState) {
     return reduxState
 }
 
-const mapDispatchToProps = {updateUser, updateNotes, updateReminders}
+const mapDispatchToProps = {updateUser, updateNotes, updateReminders, updateTodos, updateCurrentDisplay}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)

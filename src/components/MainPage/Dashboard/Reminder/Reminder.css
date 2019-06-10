@@ -1,9 +1,9 @@
 .Reminder{
     width: 300px;
     word-wrap: break-word;
-    border-radius: 2px;
+    border-radius: 3px;
     margin: 5px;
-    border: 1px solid rgba(10,10,10, .5);
+    border: 1px solid grey;
     background: rgba(25, 25, 25, .5);
     box-shadow: 1px 1px 5px 1px rgba(10, 10, 10, .1);
 }
@@ -18,7 +18,36 @@
     padding-bottom: 25px;
 }
 
-.Reminder:hover{
-    /* box-shadow: 1px 1px 5px 3px rgba(10, 10, 10, .4); */
-    background: rgba(10, 10, 10, .2);
+.reminder-buttons button{
+    height: 25px;
+    width: 50px;
+    background: rgba(10, 10, 10, 0);
+    border: 1px solid darkgrey;
+    color: darkgrey;
+    margin: 3px;
+    padding: 0;  
+    opacity: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.reminder-buttons{
+    display: flex;
+    justify-content: flex-end;
+}
+.Reminder:hover button{
+    opacity: 1;
+  
+}
+
+@media(max-width: 1200px){
+    .Reminder{
+        width: 400px;
+    }
+}
+
+@media(max-width: 600px){
+    .Reminder{
+        width: 250px;
+    }
 }

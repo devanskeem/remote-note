@@ -12,8 +12,8 @@
     background: rgba(80, 80, 80, .4)
 }
 
-.NoteModal {
-    height: 100%;
+.ReminderModal {
+    height: 280px;
     width: 750px;
     display: flex;
     flex-direction: column;
@@ -37,21 +37,8 @@
 .title-input::placeholder{
     color: darkgrey;
 }
-.content-input {
-    margin: 5px;
-    border: none;
-    font-size: 20px;
-    width: 98%;
-    background: rgb(40, 40, 40);
-    caret-color: darkgrey;
-    color: darkgrey;
-    height: 90px;
-}
-.content-input::placeholder{
-    color: darkgrey;
-}
 
-.note-btns {
+.reminder-btns {
     display: flex;
     margin: 7px;
     justify-content: space-between

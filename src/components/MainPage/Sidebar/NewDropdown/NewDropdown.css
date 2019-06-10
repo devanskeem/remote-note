@@ -1,0 +1,31 @@
+.Dropdown{
+    height: 140px;
+    width: 130px;
+    background: rgba(52, 52, 52, 0);
+    position: fixed;
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    top: 35px;
+    left: 183px;
+}
+
+#drop-btn{
+    background: rgb(95, 95, 95);
+    font-weight: 400;
+}
+
+#drop-btn:hover{
+    background: rgb(50, 96, 233);
+    opacity: 1;
+}
+
+.dropdown-background{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background: rgba(0, 0, 0, 0)
+}

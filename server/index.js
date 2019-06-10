@@ -41,5 +41,9 @@ app.delete('/reminders/delete/:reminder_id', data_ctrl.deleteReminder)
 
 //todo endpoints
 app.get('/todos/all/:user_id', data_ctrl.getAllTodos)
+app.get('/todos/items/:todo_id', data_ctrl.getTodoItems)
+app.post('/todos/add', data_ctrl.addTodo)
+app.post('/todos/add-item', data_ctrl.addTodoItem)
+app.delete('/todos/delete/:todo_id', data_ctrl.deleteTodo)
 
 app.listen(SERVER_PORT, () => console.log(`Listening on port ${SERVER_PORT}`))

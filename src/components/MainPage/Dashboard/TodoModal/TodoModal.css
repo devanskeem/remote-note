@@ -1,0 +1,114 @@
+.modal-background{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    background: rgba(80, 80, 80, .4)
+}
+
+.TodoModal {
+    width: 20em;
+    display: flex;
+    flex-direction: column;
+    background: rgb(40, 40, 40);
+    justify-content: space-between;
+    /* margin-bottom: 250px; */
+}
+
+.title-input {
+    margin: 5px;
+    height: 35px;
+    border: none;
+    font-size: 35px;
+    width: 95%;
+    background: rgb(40, 40, 40);
+    caret-color: darkgrey;
+    color: darkgrey;
+
+}
+
+.todoList {
+    margin: 3px 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: auto;
+}
+
+.todoItem {
+    width: 90%;
+    background: rgb(79, 79, 79);
+    margin: 7px;
+    border-radius: 4px;
+    word-wrap: break-word;
+    list-style: none;
+    padding: 8px 5px;
+    display: flex;
+    align-items: center;
+}
+
+.todoInput {
+    height: 30px;
+    width: 75%;
+    font-size: 20px;
+    background: rgb(48, 48, 48);
+    caret-color: darkgrey;
+    color: darkgrey;
+    border: none;
+    border-radius: 3px;
+
+}
+
+.input{
+    display: flex;
+    justify-content: center;
+}
+
+
+.input button{
+    width: 15%;
+    height: 30px;
+    background: royalblue;
+    border-radius: 3px;
+    border: none;
+    color: white;
+    font-weight: 400;
+    font-size: 15px;
+    margin-left: 7px;
+}
+
+.input button:hover{
+    opacity: .9;
+}
+.title-input::placeholder{
+    color: darkgrey;
+}
+
+.todo-btns {
+    display: flex;
+    margin: 7px;
+    justify-content: space-between
+}
+
+.todo-btns button{
+    height: 25px;
+    width: 50px;
+    background: rgba(10, 10, 10, 0);
+    border: 1px solid darkgrey;
+    color: darkgrey;
+    margin: 3px;
+    padding: 0;  
+    display: flex;
+    justify-content: center;
+}
+
+.left-btns{
+    display: flex;
+}

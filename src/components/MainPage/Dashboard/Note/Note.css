@@ -1,25 +1,52 @@
 .Note{
     width: 300px;
     word-wrap: break-word;
-    border-radius: 5px;
+    border-radius: 3px;
     margin: 5px;
     background: rgba(25, 25, 25, .5);
     box-shadow: 1px 1px 5px 1px rgba(10, 10, 10, .1);
     border: 1px solid grey;
 }
-
-.Note h3{
-    margin: 1px;
-}
-
-.contents{
-    margin: 5px;
+.title h1{
+    font-size: 20px;
+    margin: 3px 0 5px 5px;
     color: lightgrey;
-    padding-bottom: 25px;
+}
+.note-content h3{
+    font-size: 15px;
+    margin: 5px;
+    color: darkgrey;
 }
 
-.Note:hover{
-    /* box-shadow: 1px 1px 5px 3px rgba(10, 10, 10, .4); */
-    background: rgba(10, 10, 10, .2);
+.note-buttons button{
+    height: 25px;
+    width: 50px;
+    background: rgba(10, 10, 10, 0);
+    border: 1px solid darkgrey;
+    color: darkgrey;
+    margin: 3px;
+    padding: 0;  
+    opacity: 0;
+    display: flex;
+    justify-content: center;
 }
 
+.note-buttons{
+    display: flex;
+    justify-content: flex-end;
+}
+.Note:hover button{
+    opacity: 1;
+  
+}
+@media(max-width: 1200px){
+    .Note{
+        width: 400px;
+    }
+}
+
+@media(max-width: 600px){
+    .Note{
+        width: 250px;
+    }
+}
