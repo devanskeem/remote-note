@@ -17,6 +17,16 @@ export class TodoModal extends Component {
             closeButton: 'Close'
         }
     }
+
+    componentDidMount = () => {
+        if(this.props.editing){
+            this.setState({
+                title: this.props.title,
+                todoItems: this.props.items
+            })
+        }
+    }
+
     handleInputChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value

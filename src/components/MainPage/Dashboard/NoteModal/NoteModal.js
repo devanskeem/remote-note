@@ -14,6 +14,13 @@ export class NoteModal extends Component {
             closeButton: 'Close'
         }
     }
+    componentDidMount() {
+        if(this.props.editing){
+            this.setState({
+                
+            })
+        }
+    }
     handleInputChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value

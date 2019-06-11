@@ -15,8 +15,11 @@ export class Todo extends Component {
                         this.props.updateDashboard();
                     })
             })
+    }
 
-
+    handleEdit = () => {
+        this.props.updateState(this.props.editing, this.props.title, '','', this.props.items, this.props.id)
+        this.props.toggleTodoModal()
     }
     render() {
         const { items } = this.props
@@ -38,7 +41,7 @@ export class Todo extends Component {
                     </ul>
                 </div>
                 <div className="todo-buttons">
-                    <button onClick={this.props.toggleTodoModal} >edit</button>
+                    <button onClick={this.handleEdit} >edit</button>
                     <button onClick={this.deleteTodo}>delete</button>
                 </div>
             </div>

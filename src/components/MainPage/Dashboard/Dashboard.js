@@ -16,6 +16,12 @@ export class Dashboard extends Component {
     
         this.state = {
             screenWidth: 1201,
+            editing: false,
+            title: '',
+            content: '',
+            date: '',
+            items: [],
+            id: null
         }
     }
     resize = () => {
@@ -53,6 +59,17 @@ export class Dashboard extends Component {
         this.props.updateCurrentDisplay([...notes, ...reminders, ...todos])
         this.forceUpdate()
     }
+
+    updateState = (editing = true, title = '', content = '', date = '', items = '', id = null) => {
+        this.setState({
+            editing,
+            title,
+            content,
+            date, 
+            items,
+            id
+        })
+    }
     getColumn(col){
         const {currentDisplay} = this.props.dataReducer
         let column = currentDisplay.map((element, index) => {
@@ -86,6 +103,11 @@ export class Dashboard extends Component {
                             toggleTodoModal={this.props.toggleTodoModal} 
                             todoId={element.todo_id} 
                             updateDashboard={this.updateDashboard}
+                            updateState={this.updateState}
+                            // {() => {
+                            //     this.toggleTodoModal()
+                            //     this.updateState(true, element.title, '', '', element.items, element.todo_id)
+                            // }}
                         />)
                 }
             } else if(col === 1){
@@ -111,12 +133,18 @@ export class Dashboard extends Component {
 
                     else if(element.todo_id) return( 
                         <Todo 
-                            key={element.reminder_id} 
+                            key={element.todo_id} 
                             title={element.title} 
                             todoId={element.todo_id} 
                             items={element.items} 
                             toggleTodoModal={this.props.toggleTodoModal} 
                             updateDashboard={this.updateDashboard}
+                            updateState={this.updateState}
+                            // {() => {
+                            //     console.log('asdgj')
+                            //     this.toggleTodoModal()
+                            //     this.updateState(true, element.title, '', '', element.items, element.todo_id)
+                            // }}
                         />)
             }
         })
@@ -129,7 +157,9 @@ export class Dashboard extends Component {
                 <NoteModal 
                     toggleNoteModal={this.props.toggleNoteModal}   
                     updateDashboard={this.updateDashboard}    
-
+                    editing={this.state.editing}
+                    title={this.state.title}
+                    content={this.state.content}
                 /> :
                 null
                 }
@@ -143,7 +173,11 @@ export class Dashboard extends Component {
                 {this.props.showTodoModal ? 
                 <TodoModal 
                     toggleTodoModal={this.props.toggleTodoModal}      
-                    updateDashboard={this.updateDashboard}                      
+                    updateDashboard={this.updateDashboard}  
+                    editing={this.state.editing}
+                    title={this.state.title}
+                    items={this.state.items}
+                    id={this.state.id}
                 /> :
                 null
                 }
