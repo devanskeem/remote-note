@@ -30,7 +30,6 @@ export function updateNotes(notes) {
 }
 
 export function updateCurrentDisplay(currentDisplay) {
-    console.log('current', currentDisplay)
     const sorted = currentDisplay.sort((a, b) => {
         return a.timestamp > b.timestamp ? -1 : 1
     })

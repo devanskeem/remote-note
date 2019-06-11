@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './NoteModal.css'
 import axios from 'axios'
 import { connect } from 'react-redux';
-import { updateNotes, updateCurrentDisplay } from '../../../../redux/dataReducer'
+import { updateNotes } from '../../../../redux/dataReducer'
 export class NoteModal extends Component {
     constructor(props) {
         super(props)
@@ -27,15 +27,13 @@ export class NoteModal extends Component {
 
     handleSave = () => {
         this.props.toggleNoteModal()
-
+        let { notes } = this.props.dataReducer
         if (this.state.title || this.state.content){
             const { user_id } = this.props.userReducer
             const { title, content } = this.state
             axios.post('/notes/add', { user_id: user_id, title, content }).then((res) => {
-                let { notes, reminders, todos } = this.props.dataReducer
-                this.props.updateNotes(res.data)
-                this.props.updateCurrentDisplay(notes)     
-                console.log('this.props.dataReducer', this.props.dataReducer)
+                this.props.updateNotes([...notes, ...res.data])
+                this.props.updateDashboard()
             })
                 .catch(err => console.log(err))
         }
@@ -80,6 +78,6 @@ function mapStateToProps(reduxState) {
     return reduxState
 }
 
-const mapDispatchToProps = { updateNotes, updateCurrentDisplay }
+const mapDispatchToProps = { updateNotes }
 
 export default connect(mapStateToProps, mapDispatchToProps)(NoteModal)

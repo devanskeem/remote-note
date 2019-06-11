@@ -32,11 +32,8 @@ export class NoteModal extends Component {
             const { user_id } = this.props.userReducer
             const { title, remind_date } = this.state
             axios.post('/reminders/add', { user_id, title, remind_date }).then((res) => {
-                const {notes, reminders, todos} = this.props.dataReducer
-                console.log(notes, reminders, todos)
-                console.log(this.props)
-                console.log([...reminders, res.data[0]])
-                this.props.updateDisplay(notes, [...reminders, res.data[0]], todos)
+                this.props.updateReminders([...this.props.dataReducer.reminders, ...res.data])
+                this.props.updateDashboard()
             }).catch(err => console.log('error:', err))
         }
 

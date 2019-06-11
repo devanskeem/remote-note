@@ -6,15 +6,15 @@ import axios from 'axios'
 export class Note extends Component {
 
     deleteNote = () => {
-        axios.delete(`/notes/delete/${this.props.noteId}`)
-        axios.get(`/notes/all/${this.props.userReducer.user_id}`)
-        .then(res => {
-            this.props.updateNotes(res.data) 
-        })
-        .then(() => {
-            this.props.updateCurrentDisplay([...notes, ...reminders, ...todos]);
-        })
-        
+        axios.delete(`/notes/delete/${this.props.noteId}`).then(
+            () => {
+                axios.get(`/notes/all/${this.props.userReducer.user_id}`)
+                .then(res => {
+                    this.props.updateNotes(res.data) 
+                    this.props.updateDashboard()
+                })
+            }
+        )
     }
     render() {
         return (

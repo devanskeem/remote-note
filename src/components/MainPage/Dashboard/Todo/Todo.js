@@ -12,7 +12,7 @@ export class Todo extends Component {
                 axios.get(`/todos/all/${this.props.userReducer.user_id}`)
                     .then(res => {
                         this.props.updateTodos(res.data)
-                        this.props.updateCurrentDisplay();
+                        this.props.updateDashboard();
                     })
             })
 

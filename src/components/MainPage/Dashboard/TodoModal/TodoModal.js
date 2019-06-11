@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import TodoItem from './TodoItem'
 import './TodoModal.css'
 import axios from 'axios'
+import { updateTodos } from '../../../../redux/dataReducer'
 import { connect } from 'react-redux';
-import {updateCurrentDisplay} from '../../../../redux/dataReducer'
 
 export class TodoModal extends Component {
     constructor(props) {
@@ -35,8 +35,9 @@ export class TodoModal extends Component {
             const { user_id } = this.props.userReducer
             const { title, todoItems } = this.state
             axios.post('/todos/add', { user_id, title, items: todoItems }).then((res) => {
-                let { notes, reminders, todos } = this.props.dataReducer
-                this.props.updateCurrentDisplay([...notes, ...reminders, ...todos, res.data[0]])
+                const { todos } = this.props.dataReducer
+                this.props.updateTodos([...todos, ...res.data])
+                this.props.updateDashboard()
             })
                 .catch(err => console.log(err))
         }
@@ -102,7 +103,7 @@ function mapStateToProps(reduxState) {
     return reduxState
 }
 
-const mapDispatchToProps = {updateCurrentDisplay}
+const mapDispatchToProps = {updateTodos}
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoModal)

@@ -15,7 +15,7 @@ export class Dashboard extends Component {
         super(props)
     
         this.state = {
-             screenWidth: 1201,
+            screenWidth: 1201,
         }
     }
     resize = () => {
@@ -43,24 +43,16 @@ export class Dashboard extends Component {
                 this.props.updateTodos(res.data)
             })
             .then(() => {
-                let {notes, reminders, todos} = this.props.dataReducer
-                console.log('yooo',this.props)
-                this.props.updateCurrentDisplay([...notes, ...reminders, ...todos])
+                this.updateDashboard()
             })
             
         });
     }
-
-    // updateCurrentDisplay = (notes = this.props.dataReducer.notes, reminders = this.props.dataReducer.reminders, todos = this.props.dataReducer.todos) => {
-    //     this.props.updateNotes(notes)
-    //     this.props.updateReminders(reminders)
-    //     this.props.updateTodos(todos)
-        
-    //     this.setState({
-    //         currentDisplay: sorted 
-    //     }) 
-    // }
-    //this function take in a column parameter between 1 and 3 and returns the jsx for that column
+    updateDashboard = () => {
+        const {notes, reminders, todos} = this.props.dataReducer
+        this.props.updateCurrentDisplay([...notes, ...reminders, ...todos])
+        this.forceUpdate()
+    }
     getColumn(col){
         const {currentDisplay} = this.props.dataReducer
         let column = currentDisplay.map((element, index) => {
@@ -72,7 +64,7 @@ export class Dashboard extends Component {
                             title={element.title} 
                             content={element.content}
                             noteId={element.note_id} 
-
+                            updateDashboard={this.updateDashboard}
                         />)
 
                     else if(element.reminder_id) return (
@@ -82,7 +74,7 @@ export class Dashboard extends Component {
                             content={element.content} 
                             date={element.remind_date}
                             reminderId={element.reminder_id} 
-
+                            updateDashboard={this.updateDashboard}
                         />)
 
                     else if(element.todo_id) return (
@@ -93,7 +85,7 @@ export class Dashboard extends Component {
                             items={element.items}
                             toggleTodoModal={this.props.toggleTodoModal} 
                             todoId={element.todo_id} 
-
+                            updateDashboard={this.updateDashboard}
                         />)
                 }
             } else if(col === 1){
@@ -103,6 +95,8 @@ export class Dashboard extends Component {
                             title={element.title} 
                             content={element.content}
                             noteId={element.note_id}
+                            updateDashboard={this.updateDashboard}
+                            updateDashboard={this.updateDashboard}
                             />)
 
                     else if(element.reminder_id) return( 
@@ -112,7 +106,7 @@ export class Dashboard extends Component {
                             content={element.content} 
                             date={element.remind_date}
                             reminderId={element.reminder_id} 
-
+                            updateDashboard={this.updateDashboard}
                         />)
 
                     else if(element.todo_id) return( 
@@ -122,25 +116,35 @@ export class Dashboard extends Component {
                             todoId={element.todo_id} 
                             items={element.items} 
                             toggleTodoModal={this.props.toggleTodoModal} 
+                            updateDashboard={this.updateDashboard}
                         />)
             }
         })
         return column;
     }
     render() {
-        console.log(this.props)
         return (
             <div className='Dashboard'>
                 {this.props.showNoteModal ? 
-                <NoteModal toggleNoteModal={this.props.toggleNoteModal}/> :
+                <NoteModal 
+                    toggleNoteModal={this.props.toggleNoteModal}   
+                    updateDashboard={this.updateDashboard}    
+
+                /> :
                 null
                 }
                 {this.props.showReminderModal ? 
-                <ReminderModal  toggleReminderModal={this.props.toggleReminderModal}/> :
+                <ReminderModal  
+                    toggleReminderModal={this.props.toggleReminderModal}  
+                    updateDashboard={this.updateDashboard}
+                /> :
                 null
                 }
                 {this.props.showTodoModal ? 
-                <TodoModal toggleTodoModal={this.props.toggleTodoModal}/> :
+                <TodoModal 
+                    toggleTodoModal={this.props.toggleTodoModal}      
+                    updateDashboard={this.updateDashboard}                      
+                /> :
                 null
                 }
                 <section className="dashboard-content">

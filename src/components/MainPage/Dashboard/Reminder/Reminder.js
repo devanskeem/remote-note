@@ -12,11 +12,8 @@ export class Reminder extends Component {
         axios.get(`/reminders/all/${this.props.userReducer.user_id}`)
         .then(res => {
             this.props.updateReminders(res.data) 
+            this.props.updateDashboard();
         })
-        .then(() => {
-            this.props.updateCurrentDisplay([...notes, ...reminders, ...todos]);
-        })
-        
     }
     render() {
         return (
