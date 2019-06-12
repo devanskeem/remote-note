@@ -24,6 +24,7 @@ export class Dashboard extends Component {
             id: null
         }
     }
+
     resize = () => {
         this.setState({
             screenWidth: window.innerWidth
@@ -32,7 +33,6 @@ export class Dashboard extends Component {
 
     componentDidMount() {
         window.addEventListener('resize', this.resize)
-        console.log('this.props', this.props)
         axios.get('/auth/getUserData').then((res) => {
             this.props.updateUser(res.data)
             return res.data;
@@ -57,6 +57,16 @@ export class Dashboard extends Component {
     updateDashboard = () => {
         const {notes, reminders, todos} = this.props.dataReducer
         this.props.updateCurrentDisplay([...notes, ...reminders, ...todos])
+        this.setState({
+            screenWidth: 1201,
+            editing: false,
+            title: '',
+            content: '',
+            date: '',
+            items: [],
+            id: null
+        })
+
         this.forceUpdate()
     }
 
@@ -82,6 +92,8 @@ export class Dashboard extends Component {
                             content={element.content}
                             noteId={element.note_id} 
                             updateDashboard={this.updateDashboard}
+                            toggleNoteModal={this.props.toggleNoteModal}
+                            updateState={this.updateState}
                         />)
 
                     else if(element.reminder_id) return (
@@ -92,22 +104,20 @@ export class Dashboard extends Component {
                             date={element.remind_date}
                             reminderId={element.reminder_id} 
                             updateDashboard={this.updateDashboard}
+                            toggleReminderModal={this.props.toggleReminderModal}
+                            updateState={this.updateState}
                         />)
 
                     else if(element.todo_id) return (
                         <Todo 
                             key={element.todo_id} 
-                            title={element.title} 
                             todoId={element.todo_id} 
+                            title={element.title} 
                             items={element.items}
                             toggleTodoModal={this.props.toggleTodoModal} 
                             todoId={element.todo_id} 
                             updateDashboard={this.updateDashboard}
                             updateState={this.updateState}
-                            // {() => {
-                            //     this.toggleTodoModal()
-                            //     this.updateState(true, element.title, '', '', element.items, element.todo_id)
-                            // }}
                         />)
                 }
             } else if(col === 1){
@@ -116,9 +126,10 @@ export class Dashboard extends Component {
                             key={element.note_id} 
                             title={element.title} 
                             content={element.content}
-                            noteId={element.note_id}
+                            noteId={element.note_id} 
                             updateDashboard={this.updateDashboard}
-                            updateDashboard={this.updateDashboard}
+                            toggleNoteModal={this.props.toggleNoteModal}
+                            updateState={this.updateState}
                             />)
 
                     else if(element.reminder_id) return( 
@@ -129,6 +140,8 @@ export class Dashboard extends Component {
                             date={element.remind_date}
                             reminderId={element.reminder_id} 
                             updateDashboard={this.updateDashboard}
+                            toggleReminderModal={this.props.toggleReminderModal}
+                            updateState={this.updateState}
                         />)
 
                     else if(element.todo_id) return( 
@@ -140,11 +153,6 @@ export class Dashboard extends Component {
                             toggleTodoModal={this.props.toggleTodoModal} 
                             updateDashboard={this.updateDashboard}
                             updateState={this.updateState}
-                            // {() => {
-                            //     console.log('asdgj')
-                            //     this.toggleTodoModal()
-                            //     this.updateState(true, element.title, '', '', element.items, element.todo_id)
-                            // }}
                         />)
             }
         })
@@ -160,6 +168,7 @@ export class Dashboard extends Component {
                     editing={this.state.editing}
                     title={this.state.title}
                     content={this.state.content}
+                    id={this.state.id}
                 /> :
                 null
                 }
@@ -167,6 +176,10 @@ export class Dashboard extends Component {
                 <ReminderModal  
                     toggleReminderModal={this.props.toggleReminderModal}  
                     updateDashboard={this.updateDashboard}
+                    editing={this.state.editing}
+                    title={this.state.title}
+                    date={this.state.date}
+                    id={this.state.id}
                 /> :
                 null
                 }

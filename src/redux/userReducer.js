@@ -7,7 +7,6 @@ const initialState = {
 const UPDATE_USER = "UPDATE_USER"
 
 export function updateUser(user) {
-    console.log(user)
     return {
         type: UPDATE_USER,
         payload: user

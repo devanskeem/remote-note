@@ -13,8 +13,7 @@
 }
 
 .NoteModal {
-    height: 100%;
-    width: 750px;
+    width: 550px;
     display: flex;
     flex-direction: column;
     background: rgb(40, 40, 40);
@@ -45,8 +44,9 @@
     background: rgb(40, 40, 40);
     caret-color: darkgrey;
     color: darkgrey;
-    height: 90px;
+    height: 120px;
 }
+
 .content-input::placeholder{
     color: darkgrey;
 }
@@ -56,3 +56,11 @@
     margin: 7px;
     justify-content: space-between
 }
+.note-btns button{
+    margin: 2px;
+    height: 25px;
+    border: 1px solid darkgrey;
+    border-radius: 1px;
+    background: rgba(0,0,0,0);
+    color: darkgrey;
+}   

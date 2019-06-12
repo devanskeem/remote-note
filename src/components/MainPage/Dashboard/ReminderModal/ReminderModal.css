@@ -13,8 +13,8 @@
 }
 
 .ReminderModal {
-    height: 280px;
-    width: 750px;
+    /* height: 280px; */
+    width: 350px;
     display: flex;
     flex-direction: column;
     background: rgb(40, 40, 40);
@@ -43,3 +43,12 @@
     margin: 7px;
     justify-content: space-between
 }
+
+.reminder-btns button{
+    margin: 2px;
+    height: 25px;
+    border: 1px solid darkgrey;
+    border-radius: 1px;
+    background: rgba(0,0,0,0);
+    color: darkgrey;
+}   

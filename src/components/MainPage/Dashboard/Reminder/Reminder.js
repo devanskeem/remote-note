@@ -15,6 +15,10 @@ export class Reminder extends Component {
             this.props.updateDashboard();
         })
     }
+    handleEdit = () => {
+        this.props.updateState(this.props.editing, this.props.title, '', this.props.date, [], this.props.reminderId)
+        this.props.toggleReminderModal()
+    }
     render() {
         return (
             <div className='Reminder'>
@@ -23,7 +27,7 @@ export class Reminder extends Component {
                     <p>{this.props.date} </p>
                 </div>
                 <div className="reminder-buttons">
-                    <button>edit</button>
+                    <button onClick={this.handleEdit}>edit</button>
                     <button onClick={this.deleteReminder}>delete</button>
                     
                 </div>

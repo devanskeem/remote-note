@@ -8,16 +8,17 @@ export class NoteModal extends Component {
         super(props)
 
         this.state = {
-            title: '',
+            title: 'Note',
             content: '',
-            show: false,
             closeButton: 'Close'
         }
     }
-    componentDidMount() {
+
+    componentDidMount = () => {
         if(this.props.editing){
             this.setState({
-                
+                title: this.props.title,
+                content: this.props.content
             })
         }
     }
@@ -25,9 +26,14 @@ export class NoteModal extends Component {
         this.setState({
             [e.target.name]: e.target.value
         })
-        if (this.state.title || this.state.content){
+        if (this.state.content && !this.props.editing){
             this.setState({
                 closeButton: 'Save'
+            })
+        }
+        else if(this.state.content && this.props.editing){
+            this.setState({
+                closeButton: 'Update'
             })
         }
     }
@@ -35,7 +41,7 @@ export class NoteModal extends Component {
     handleSave = () => {
         this.props.toggleNoteModal()
         let { notes } = this.props.dataReducer
-        if (this.state.title || this.state.content){
+        if ((this.state.content) && !this.props.editing){
             const { user_id } = this.props.userReducer
             const { title, content } = this.state
             axios.post('/notes/add', { user_id: user_id, title, content }).then((res) => {
@@ -43,6 +49,20 @@ export class NoteModal extends Component {
                 this.props.updateDashboard()
             })
                 .catch(err => console.log(err))
+        }
+
+        else if (this.props.editing){
+            const {id} = this.props
+            const {title, content} = this.state
+            const {notes} = this.props.dataReducer
+            const currIndex = notes.findIndex(note => note.note_id === id)
+            const newNotes = notes
+            axios.put(`/notes/update`, {note_id: id, title, content}).then(res => {
+                newNotes.splice(currIndex, 1)
+                newNotes.push(...res.data)
+                this.props.updateNotes([...newNotes])
+                this.props.updateDashboard()
+            })
         }
 
         this.setState({
@@ -55,10 +75,11 @@ export class NoteModal extends Component {
     }
     render() {
         return (
-            <div className="modal-background"onClick={this.handleSave}>
+            <div className="modal-background" 
+            onClick={this.handleSave}>
                 <div className='NoteModal' onClick={this.handleChildClick}>
                     <section className="title">
-                        <textarea value={this.state.title} name="title" type="text" className="title-input" placeholder='Title' onChange={this.handleInputChange} />
+                        <input value={this.state.title} name="title" type="text" className="title-input" placeholder='Title' onChange={this.handleInputChange} />
                     </section>
 
                     <section className="content">

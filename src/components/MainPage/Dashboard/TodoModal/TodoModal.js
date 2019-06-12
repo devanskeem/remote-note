@@ -13,7 +13,6 @@ export class TodoModal extends Component {
             title: "Todo",
             todoItems: [],
             todoInput: '',
-            show: false,
             closeButton: 'Close'
         }
     }
@@ -31,9 +30,14 @@ export class TodoModal extends Component {
         this.setState({
             [e.target.name]: e.target.value
         })
-        if (this.state.title || this.state.content) {
+        if ((this.state.title || this.state.content) && !this.props.editing) {
             this.setState({
                 closeButton: 'Save'
+            })
+        }
+        else if(this.state.todoItems && this.props.editing){
+            this.setState({
+                closeButton: 'Update'
             })
         }
     }
@@ -41,7 +45,7 @@ export class TodoModal extends Component {
     handleSave = () => {
         this.props.toggleTodoModal()
 
-        if (this.state.todoItems.length) {
+        if (this.state.todoItems.length && !this.props.editing) {
             const { user_id } = this.props.userReducer
             const { title, todoItems } = this.state
             axios.post('/todos/add', { user_id, title, items: todoItems }).then((res) => {
@@ -50,13 +54,26 @@ export class TodoModal extends Component {
                 this.props.updateDashboard()
             })
                 .catch(err => console.log(err))
+        } 
+        else if (this.props.editing){
+            const {id} = this.props
+            const {title, todoItems} = this.state
+            const {todos} = this.props.dataReducer
+            const currIndex = todos.findIndex(todo => todo.todo_id === id)
+            const newTodos = todos
+            axios.put(`/todos/update`, {todo_id: id, title, items: todoItems}).then(res => {
+                newTodos.splice(currIndex, 1)
+                newTodos.push(...res.data)
+                this.props.updateTodos([...newTodos])
+                this.props.updateDashboard()
+            })
         }
 
         this.setState({
-            title: 'Todo',
-            content: '',
+            title: "Todo",
             todoItems: [],
-            todoInput: ''
+            todoInput: '',
+            closeButton: 'Close'
         })
     }
 
@@ -79,7 +96,7 @@ export class TodoModal extends Component {
             <div className="modal-background">
                 <div className='TodoModal'>
                     <section className="title">
-                        <textarea value={this.state.title} name="title" type="text" className="title-input" placeholder='Title' onChange={this.handleInputChange} />
+                        <input value={this.state.title} name="title" type="text" className="title-input" placeholder='Title' onChange={this.handleInputChange} />
                     </section>
 
                     <section className="content">

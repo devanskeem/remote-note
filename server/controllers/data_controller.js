@@ -46,10 +46,10 @@ module.exports = {
         res.status(200).send('reminder deleted')
     },
     updateReminder: async (req, res) => {
-        const {reminder_id, title, content, remind_time, remind_date} = req.body
+        const {reminder_id, title, remind_date} = req.body
         const timestamp = Math.floor(Date.now() / 1000)
         const db = req.app.get('db')
-        const reminder = await db.update_reminder({reminder_id, title, remind_time, remind_date, timestamp})
+        const reminder = await db.update_reminder({reminder_id, title, remind_date, timestamp})
         res.status(200).send(reminder)
     },
     getAllTodos: async (req, res) => {
@@ -83,6 +83,13 @@ module.exports = {
         const {todo_id} = req.params 
         await db.delete_todo({todo_id})
         res.status(200).send('todo deleted')
+    },
+    updateTodo: async (req, res) => {
+        const db = req.app.get('db')
+        const timestamp = Math.floor(Date.now() / 1000)
+        const {todo_id, title, items} = req.body
+        const updated = await db.update_todo({todo_id, title, items, timestamp})
+        res.status(200).send(updated)
     }
 }
  

@@ -16,9 +16,8 @@ export class Todo extends Component {
                     })
             })
     }
-
     handleEdit = () => {
-        this.props.updateState(this.props.editing, this.props.title, '','', this.props.items, this.props.id)
+        this.props.updateState(this.props.editing, this.props.title, '','', this.props.items, this.props.todoId)
         this.props.toggleTodoModal()
     }
     render() {

@@ -16,7 +16,10 @@ export class Note extends Component {
             }
         )
     }
-
+    handleEdit = () => {
+        this.props.updateState(this.props.editing, this.props.title, this.props.content,'', [], this.props.noteId)
+        this.props.toggleNoteModal()
+    }
     render() {
         return (
             <div className='Note'>
@@ -28,7 +31,7 @@ export class Note extends Component {
                     <h3>{this.props.content}</h3>
                 </div>
                 <div className="note-buttons">
-                    <button>edit</button>
+                    <button onClick={this.handleEdit}>edit</button>
                     <button onClick={this.deleteNote}>delete</button>
                     
                 </div>
