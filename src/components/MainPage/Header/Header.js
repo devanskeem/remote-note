@@ -1,22 +1,18 @@
 import React, { Component } from 'react'
-import {withRouter} from 'react-router-dom'
 import './Header.css'
 import axios from 'axios'
 import { updateCurrentDisplay } from '../../../redux/dataReducer'
 import { connect } from 'react-redux'
+import AccountDropdown from './AccountDropdown';
 export class Header extends Component {
     constructor(props) {
         super(props)
     
         this.state = {
+            showDropdown: false
         }
     }
-    
-    handleLogout = () =>{
-        axios.get('/auth/logout').then(res => {
-            this.props.history.push('/')
-        })
-    }
+
 
     handleSearch = (e) => {
         let {notes, reminders, todos} = this.props.dataReducer
@@ -37,6 +33,12 @@ export class Header extends Component {
         }
         this.props.updateCurrentDisplay([...titleResult, ...noteResult, ...todoResult])
     }
+
+    toggleDropdown = () => {
+        this.setState({
+            showDropdown: !this.state.showDropdown
+        })
+    }
     render() {
         return (
             <div className='Header'>
@@ -49,7 +51,14 @@ export class Header extends Component {
                 <span className="user-data">
                     <div className="profile"></div>                
                 </span>
-                <button className='logout-btn' onClick={this.handleLogout}>Logout</button>
+                <button className='account-button' onClick={this.toggleDropdown}>
+                    <div className="circle"></div>
+                    <div className="circle"></div>
+                    <div className="circle"></div>
+                </button>
+                {
+                    this.state.showDropdown ? <AccountDropdown/> : null
+                }
             </div>
         )
     }
@@ -63,4 +72,4 @@ const mapDispatchToProps = {
     updateCurrentDisplay
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header))
+export default connect(mapStateToProps, mapDispatchToProps)(Header)

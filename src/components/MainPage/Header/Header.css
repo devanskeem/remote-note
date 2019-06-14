@@ -44,6 +44,57 @@
     align-items: center;
 }
 
+.account-button{
+    margin: 15px;
+    height: 30px;
+    width: 30px;
+    border: none;
+    background: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.circle{
+    height: 5px;
+    width: 5px;
+    margin: 1px;
+    border-radius: 5px;
+    background: lightgrey;
+}
+
+.account-dropdown{
+    width: 180px;
+    border-radius: 4px;
+    position: fixed;
+    right: 24px;
+    top: 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    background: rgb(40, 40, 40);
+    border: 1px solid rgb(29, 29, 29);
+    box-shadow: 2px 2px 10px rgba(7, 7, 7, .7);
+}
+
+.dropdown-btn{
+    text-align: left;
+    padding-left: 9px;
+    margin: 2px 0;
+    height: 30px;
+    background: none;
+    border: none;
+    font-size: 15px;
+    color: darkgrey;
+}
+.dropdown-btn:hover{
+    background: rgb(50, 50, 50);
+}
+
+.dropdown-btn:active{
+    background: rgb(40, 40, 40);
+}
 @media(max-width: 600px){
     .Header{
         height: 50px;

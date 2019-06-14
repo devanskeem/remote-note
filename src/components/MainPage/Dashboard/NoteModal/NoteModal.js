@@ -70,14 +70,11 @@ export class NoteModal extends Component {
             content: '',
         })
     }
-    handleChildClick = (e) => {
-        e.stopPropagation()
-    }
     render() {
         return (
             <div className="modal-background" 
             onClick={this.handleSave}>
-                <div className='NoteModal' onClick={this.handleChildClick}>
+                <div className='NoteModal' onClick={e => e.stopPropagation()}>
                     <section className="title">
                         <input value={this.state.title} name="title" type="text" className="title-input" placeholder='Title' onChange={this.handleInputChange} />
                     </section>

@@ -2,7 +2,8 @@ const initialState = {
     username: '',
     first_name: '',
     last_name: '',
-    user_id: null
+    user_id: null,
+    premium: false
 }
 const UPDATE_USER = "UPDATE_USER"
 
@@ -17,7 +18,7 @@ export function updateUser(user) {
 function userReducer(state = initialState, action){
     switch (action.type) {
         case UPDATE_USER:
-            const {username, first_name, last_name, user_id} = action.payload
+            const {username, first_name, last_name, user_id, premium} = action.payload
             return {...state, ...action.payload}
         default:
             return state
