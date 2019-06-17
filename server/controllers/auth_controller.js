@@ -60,15 +60,10 @@ module.exports = {
         const { phone_number, user_id } = req.body
 
         const date = new Date()
-        console.log('phone_number', phone_number)
-        console.log('user_id', user_id)
         const customer = await db.get_user_data({ user_id })
         const premium_details = await db.get_premium_details({ user_id })
         let credits = premium_details.credits_used
-        console.log('credits', credits)
         if (credits === undefined) credits = 0;
-        console.log('credits2', credits)
-        console.log('billing_date', date)
         if (customer.premium) {
             return res.status(401).send('Already a premium customer')
         }

@@ -9,6 +9,7 @@ const MessagingResponse = require('twilio').twiml.MessagingResponse;
 const auth_ctrl = require('./controllers/auth_controller')
 const data_ctrl = require('./controllers/data_controller')
 const twil_ctrl = require('./controllers/twilio_controller')
+const stripe_ctrl = require('./controllers/stripe_controller')
 const app = express()
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(express.json())
@@ -57,6 +58,8 @@ app.put('/todos/update', data_ctrl.updateTodo)
 
 //twilio endpoints
 app.post('/message', twil_ctrl.add)
+
+app.post('/stripe/subscribe', stripe_ctrl.subscribe)
 
 
 

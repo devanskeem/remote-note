@@ -106,7 +106,7 @@ export class TodoModal extends Component {
                     </section>
                     <section className="input">
                         <input className='todoInput' type="text" value={this.state.todoInput} name='todoInput' placeholder='Add Item' onChange={this.handleInputChange} />
-                        <button onClick={this.handleTodoAdd}>ADD</button>
+                        <button onClick={this.handleTodoAdd}><h1 className='addSign'>+</h1></button>
                     </section>
 
 
