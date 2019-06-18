@@ -93,8 +93,8 @@ export class TodoModal extends Component {
         })
 
         return (
-            <div className="modal-background">
-                <div className='TodoModal'>
+            <div className="modal-background" onClick={this.props.toggleTodoModal}>
+                <div className='TodoModal' onClick={e => e.stopPropagation()}>
                     <section className="title">
                         <input value={this.state.title} name="title" type="text" className="title-input" placeholder='Title' onChange={this.handleInputChange} />
                     </section>

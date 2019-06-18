@@ -32,10 +32,10 @@ module.exports = {
         res.status(200).send(reminders)
     },
     addReminder: async (req, res) => {
-        const {user_id, title, remind_date} = req.body
+        const {user_id, title, remind_unix} = req.body
         const timestamp = Math.floor(Date.now() / 1000)
         const db = req.app.get('db')
-        const reminder = await db.add_reminder({user_id, title, remind_date, timestamp})
+        const reminder = await db.add_reminder({user_id, title, remind_unix, timestamp})
         res.status(200).send(reminder)
     },
     deleteReminder: async (req, res) => {
@@ -45,10 +45,10 @@ module.exports = {
         res.status(200).send('reminder deleted')
     },
     updateReminder: async (req, res) => {
-        const {reminder_id, title, remind_date} = req.body
+        const {reminder_id, title, remind_unix} = req.body
         const timestamp = Math.floor(Date.now() / 1000)
         const db = req.app.get('db')
-        const reminder = await db.update_reminder({reminder_id, title, remind_date, timestamp})
+        const reminder = await db.update_reminder({reminder_id, title, remind_unix, timestamp})
         res.status(200).send(reminder)
     },
     getAllTodos: async (req, res) => {

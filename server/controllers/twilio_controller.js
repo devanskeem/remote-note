@@ -26,13 +26,17 @@ module.exports = {
     },
     remind: async (req, res) => {
         const db = req.app.get('db')
-        const { title, user_id, remind_date } = req.body;
+        const { title, user_id, remind_unix } = req.body;
         const premium_details = await db.get_premium_details({ user_id })
-        client.messages
+        const millisecondsToReminder = remind_unix - new Date()
+        setTimeout(() => {
+            client.messages
             .create({
                 body: `Reminder: \n ${title}`,
                 from: '+16127126683',
-                to: premium_details.phone_number
+                to: premium_details[0].phone_number
             })
+        }, millisecondsToReminder)
+        
     }
 }

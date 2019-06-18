@@ -10,6 +10,8 @@ export class NoteModal extends Component {
         this.state = {
             title: 'Reminder',
             remind_date: null,
+            remind_time: null,
+            remind_unix: null,
             closeButton: 'Close'
         }
     }
@@ -22,12 +24,7 @@ export class NoteModal extends Component {
         }
     }
     handleInputChange = (e) => {
-        if (e.target.name === 'remind_date' || e.target.name === 'remind_time'){
-            console.log('hello')
-        }
-        this.setState({
-            [e.target.name]: e.target.value
-        })
+        console.log('this.state', this.state)
         if (!this.props.editing) {
             this.setState({
                 closeButton: 'Save'
@@ -38,27 +35,29 @@ export class NoteModal extends Component {
                 closeButton: 'Update'
             })
         }
+        this.setState({
+            [e.target.name]: e.target.value
+        })
     }
 
     handleSave = () => {
-        let newDate = Date.parse(`${this.state.remind_date} ${this.state.remind_time}`)
-        console.log(new Date(newDate - (1000 * 60 * 60 * 6)).toUTCString())
-        console.log(new Date())
+        this.props.toggleReminderModal()
+        let remind_unix = Date.parse(`${this.state.remind_date} ${this.state.remind_time}`)
+        const { user_id } = this.props.userReducer
+        const { title } = this.state
         if (!this.props.editing) {        
-            const { user_id } = this.props.userReducer
-            const { title, remind_date } = this.state
-            axios.post('/reminders/add', { user_id, title, remind_date }).then((res) => {
+            
+            axios.post('/reminders/add', { user_id, title, remind_unix }).then((res) => {
                 this.props.updateReminders([...this.props.dataReducer.reminders, ...res.data])
                 this.props.updateDashboard()
             }).catch(err => console.log('error:', err))
         }
         else if (this.props.editing){
             const {id} = this.props
-            const {title, remind_date} = this.state
             const {reminders} = this.props.dataReducer
             const currIndex = reminders.findIndex(reminder => reminder.reminder_id === id)
             const newReminders = reminders
-            axios.put(`/reminders/update`, {reminder_id: id, title, remind_date}).then(res => {
+            axios.put(`/reminders/update`, {reminder_id: id, title, remind_unix}).then(res => {
                 newReminders.splice(currIndex, 1)
                 newReminders.push(...res.data)
                 this.props.updateReminders([...newReminders])
@@ -66,9 +65,11 @@ export class NoteModal extends Component {
             })
         }
 
+        axios.post('/twilio/remind', {title, user_id, remind_unix})
+
         this.setState({
             title: '',
-            remind_date: new Date(),
+            remind_unix: null,
         })
     }
 
@@ -88,8 +89,8 @@ export class NoteModal extends Component {
 
     render() {
         return (
-            <div className="modal-background">
-                <div className='ReminderModal'>
+            <div className="modal-background" onClick={this.props.toggleReminderModal}>
+                <div className='ReminderModal' onClick={e => e.stopPropagation()}>
                     <section className="title">
                         <input value={this.state.title} name="title" type="text" className="title-input" placeholder='Title' onChange={this.handleInputChange} />
                     </section>
