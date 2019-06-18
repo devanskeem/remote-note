@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 class TakeMoney extends React.Component {
   onToken = (token) => {
     this.props.toggleModal()
+    console.log('this.props.phone', this.props.phone)
     axios.post('/stripe/subscribe', {
       stripeToken: token.id,
       user_id: this.props.userReducer.user_id,

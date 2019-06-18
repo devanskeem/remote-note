@@ -39,7 +39,7 @@ export class AccountModal extends Component {
     }
 
     savePhoneNumber = (e) => {
-        let phoneUpdated = this.state.phone + e.target.value
+        let phoneUpdated = e.target.value
         this.setState({
             phone: phoneUpdated
         })

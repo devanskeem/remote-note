@@ -58,43 +58,55 @@
     display: flex;
     color: grey;
     margin: 3px 0;
+    width: 260px;
 }
 
 .phone-number{
     display: flex;
     color: grey;
     margin: 3px 0;
+    width: 260px;
+
 }
 
 .credits{
     display: flex;
     color: grey;
     margin: 3px 0;
+    width: 260px;
 
 }
 
 .username{
     color: grey;
     margin: 3px 0;
-    font-size: 13px
+    font-size: 18px;
+    width: 260px;
+
 }
 
 .firstname{
     color: grey;
     margin: 3px 0;
-    font-size: 13px
+    font-size: 18px;
+    width: 260px;
+
 }
 
 .lastname{
     color: grey;
     margin: 3px 0;
-    font-size: 13px
+    font-size: 18px;
+    width: 260px;
+
 }
 
 .format{
     color: grey;
     margin: 0;
-    font-size: 13px
+    font-size: 18px;
+    width: 260px;
+
 }
 
 .change-password-btn{
