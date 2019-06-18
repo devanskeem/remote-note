@@ -51,7 +51,6 @@ module.exports = {
         if (user) {
             const data = await db.get_user_data({ user_id: user.id })
             return res.status(200).send(data[0])
-            console.log('data', data)
         }
         return res.status(401).send('Please Log In')
     },

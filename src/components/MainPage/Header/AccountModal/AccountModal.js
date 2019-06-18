@@ -24,16 +24,24 @@ export class AccountModal extends Component {
     }
     componentDidMount = () => {
         axios.get(`/auth/premium-details/${this.props.userReducer.user_id}`).then(res => {
-            let phone = '';
+            let phone = '+1';
             let creditsUsed = 0;
-            if (!res.data === []) {
-                 phone = res.data[0].phone_number
-                 creditsUsed = res.data[0].credits_used
+            if (res.data[0]) {
+                phone = res.data[0].phone_number
+                creditsUsed = res.data[0].credits_used
             }
             this.setState({
                 phone,
                 creditsUsed
             })
+            this.forceUpdate();
+        })
+    }
+
+    savePhoneNumber = (e) => {
+        let phoneUpdated = this.state.phone + e.target.value
+        this.setState({
+            phone: phoneUpdated
         })
     }
 
@@ -64,46 +72,48 @@ export class AccountModal extends Component {
                 <div className='AccountModal' onClick={e => e.stopPropagation()}>
                     {this.state.showStripe ?
                         <div className='get-premium-modal'>
-                            <input className='phone-input' type="number" placeholder='Phone Number' name='phone'/>
-                            <TakeMoney phone={'+14352794599'} email={'dev@devan.com'} />
+                            <div className='phone-input-container'>
+                                <p className='phone-number'>Phone Number:</p>
+                                <input type="text" className="phone-input" name="phone"
+                                    onChange={this.savePhoneNumber}
+                                    defaultValue='+1' />
+                                <small className='format'>numbers only</small>
+                            </div>
+                            <div className='side-by-side-btns'>
+                                <button className='back-btn' onClick={this.toggleStripe}>Back</button>
+                                <div className="take-money-btn">
+                                    <TakeMoney toggleModal={this.props.toggleModal} phone={this.state.phone} />
+                                </div>
+                            </div>
+
                         </div>
-                    :
+                        :
                         <div>
 
                             {this.state.updatePassword ?
-                                <div>
-                                    <input type="password" placeholder='New Password' onChange={e => this.setState({ password: e.target.value })} />
-                                    <input type="password" placeholder='Confirm Password' onChange={e => this.setState({ passConfirm: e.target.value })} />
-                                    <button onClick={this.handlePasswordUpdate}>Change Password</button>
+                                <div className='update-password-modal'>
+                                    <input className='password-input' type="password" placeholder='New Password' onChange={e => this.setState({ password: e.target.value })} />
+                                    <input className='password-input' type="password" placeholder='Confirm Password' onChange={e => this.setState({ passConfirm: e.target.value })} />
+                                    <div className='side-by-side-btns'>
+                                        <button className='back-btn' onClick={this.togglePasswordUpdate}>Back</button>
+                                        <button className='change-password-button' onClick={this.handlePasswordUpdate}>Change Password</button>
+                                    </div>
                                 </div>
                                 :
-                                <div>
-                                    <input type="text" value={this.state.username} />
-                                    <input type="text" value={this.state.firstname} />
-                                    <input type="text" value={this.state.firstname} />
+                                <div className='update-password-modal'>
+                                    <p className='username'>Username: {this.state.username} </p>
+                                    <p className='firstname'>First Name: {this.state.firstname}</p>
+                                    <p className='lastname'>Last Name: {this.state.lastname}</p>
 
                                     {(this.state.premium) ?
                                         <div className="details">
-                                            <div className='subscription'>
-                                                <p>Subscription:</p>
-                                                <p>Premium</p>
-                                            </div>
-
-                                            <div className="phone-number">
-                                                <p>Phone Number:</p>
-                                                <p>{this.state.phone}</p>
-                                            </div>
-
-                                            <div className="credits">
-                                                <p>Credits Remaining:</p>
-                                                <p>{250 - this.state.creditsUsed}</p>
-                                            </div>
+                                            <p className='subscription'>Subscription: Premium</p>
+                                            <p className="phone-number">Phone Number: {this.state.phone}</p>
+                                            <p className="credits">Credits Remaining: {250 - this.state.creditsUsed}</p>
                                         </div>
-                                        : <button onClick={this.toggleStripe}>Get Premium</button>
+                                        : <button className='get-premium-btn' onClick={this.toggleStripe}>Get Premium</button>
                                     }
-                                    <button onClick={this.togglePasswordUpdate}>Change Password</button>
-                                    <button onClick={this.handleUpdate}>Update</button>
-
+                                    <button className='change-password-btn' onClick={this.togglePasswordUpdate} >Change Password</button>
                                 </div>
                             }
                         </div>

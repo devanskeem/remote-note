@@ -15,7 +15,7 @@ class MyDatePicker extends Component {
     return (
       <div>
         <DatePicker
-            id='date-picker'
+          id='date-picker'
           onChange={this.onDateChange}
           value={this.state.date}
         />

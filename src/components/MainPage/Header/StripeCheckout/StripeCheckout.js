@@ -6,25 +6,18 @@ import { connect } from 'react-redux';
 
 class TakeMoney extends React.Component {
   onToken = (token) => {
-    
+    this.props.toggleModal()
     axios.post('/stripe/subscribe', {
       stripeToken: token.id,
-      email: this.props.email,
       user_id: this.props.userReducer.user_id,
-      phone: this.props.phone
-    }).then(res => {
-      console.log('res', res)
-    });
-    
-    
+      phone_number: this.props.phone
+    })
   }
- 
-  // ...
- 
+  
   render() {
     return (
-      // ...
       <StripeCheckout
+        label='Get Premium'
         token={this.onToken}
         stripeKey="pk_test_uIjL3H2ALYIeSYDmjE2S9XnX00k6Pd0hnd"
       />

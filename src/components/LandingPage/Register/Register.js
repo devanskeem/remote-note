@@ -10,14 +10,13 @@ export class Register extends Component {
              username: '',
              password: '',
              first_name: '',
-             last_name: ''
+             last_name: '',
         }
     }
     handleRegisterInput = (e) => {
         this.setState({
             [e.target.name]: e.target.value
         })
-        console.log(this.state)
     }
     handleRegister = (e) => {
         e.preventDefault()

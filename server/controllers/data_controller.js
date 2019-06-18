@@ -29,7 +29,6 @@ module.exports = {
         const db = req.app.get('db')
         const {user_id} = req.params
         const reminders = await db.get_all_reminders({user_id})
-        console.log(reminders)
         res.status(200).send(reminders)
     },
     addReminder: async (req, res) => {
@@ -56,7 +55,6 @@ module.exports = {
         const db = req.app.get('db')
         const {user_id} = req.params
         const todos = await db.get_all_todos({user_id})
-        console.table(todos)
         res.status(200).send(todos)
     },
     getTodoItems: async (req, res) => {

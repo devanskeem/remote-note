@@ -15,7 +15,6 @@ export class Login extends Component {
         this.setState({
             [e.target.name]: e.target.value
         })
-        console.log(this.state)
     }
     handleLogin = (e) => {
         e.preventDefault()

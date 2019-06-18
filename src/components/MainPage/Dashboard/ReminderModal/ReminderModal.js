@@ -3,14 +3,13 @@ import './ReminderModal.css'
 import axios from 'axios'
 import { connect } from 'react-redux';
 import { updateReminders } from '../../../../redux/dataReducer'
-import DateTimePicker from "react-datetime-picker";
 export class NoteModal extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
             title: 'Reminder',
-            remind_date: '',
+            remind_date: null,
             closeButton: 'Close'
         }
     }
@@ -23,6 +22,9 @@ export class NoteModal extends Component {
         }
     }
     handleInputChange = (e) => {
+        if (e.target.name === 'remind_date' || e.target.name === 'remind_time'){
+            console.log('hello')
+        }
         this.setState({
             [e.target.name]: e.target.value
         })
@@ -39,7 +41,9 @@ export class NoteModal extends Component {
     }
 
     handleSave = () => {
-        this.props.toggleReminderModal()
+        let newDate = Date.parse(`${this.state.remind_date} ${this.state.remind_time}`)
+        console.log(new Date(newDate - (1000 * 60 * 60 * 6)).toUTCString())
+        console.log(new Date())
         if (!this.props.editing) {        
             const { user_id } = this.props.userReducer
             const { title, remind_date } = this.state
@@ -68,8 +72,7 @@ export class NoteModal extends Component {
         })
     }
 
-    handleDateChange = remind_date => {
-        this.setState({ remind_date })
+    handleDateChange = e => {
         if (!this.props.editing) {
             this.setState({
                 closeButton: 'Save'
@@ -90,13 +93,9 @@ export class NoteModal extends Component {
                     <section className="title">
                         <input value={this.state.title} name="title" type="text" className="title-input" placeholder='Title' onChange={this.handleInputChange} />
                     </section>
+                    <input type="date" name='remind_date' onChange={this.handleInputChange}/>
+                    <input type="time" name='remind_time' onChange={this.handleInputChange}/>
 
-                    <DateTimePicker 
-                        onChange={this.handleDateChange}
-                        value={this.state.remind_date}
-                        disableClock={true}
-                    />
-                    
                     <section className="reminder-btns">
                         <div className="left-btns">
                             <button className="color-btn">change color</button>

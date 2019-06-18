@@ -58,6 +58,7 @@ app.put('/todos/update', data_ctrl.updateTodo)
 
 //twilio endpoints
 app.post('/message', twil_ctrl.add)
+app.post('/twilio/remind', twil_ctrl.remind)
 
 app.post('/stripe/subscribe', stripe_ctrl.subscribe)
 
