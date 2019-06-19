@@ -7,7 +7,7 @@ module.exports = {
         console.log('req.body', req.body)
         const db = req.app.get('db')
         const customer = await stripe.customers.create({
-            email,
+            email: 'devanskeem@gmail.com',
             source: stripeToken,
         });
         const subscription = await stripe.subscriptions.create({

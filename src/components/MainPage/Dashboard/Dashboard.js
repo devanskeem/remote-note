@@ -102,6 +102,7 @@ export class Dashboard extends Component {
                             title={element.title} 
                             content={element.content} 
                             date={element.remind_date}
+                            time={element.remind_time}
                             reminderId={element.reminder_id} 
                             updateDashboard={this.updateDashboard}
                             toggleReminderModal={this.props.toggleReminderModal}
@@ -138,6 +139,7 @@ export class Dashboard extends Component {
                             title={element.title} 
                             content={element.content} 
                             date={element.remind_date}
+                            time={element.remind_time}
                             reminderId={element.reminder_id} 
                             updateDashboard={this.updateDashboard}
                             toggleReminderModal={this.props.toggleReminderModal}

@@ -7,6 +7,11 @@
     flex-direction: column;
 
 }
+.login-title{
+    font-size: 30px;
+    margin: 0 0 25px 0;
+    color: royalblue;
+}
 
 .login-form{
     height: 250px;

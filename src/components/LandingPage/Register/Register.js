@@ -32,6 +32,8 @@ export class Register extends Component {
         return (
             <div className='Register'>
                 <div className="register-form">
+                <h1 className='register-title'>Remote Note</h1>
+
                     <form>
                         <input 
                             type="text" 

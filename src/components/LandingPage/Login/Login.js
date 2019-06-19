@@ -30,6 +30,7 @@ export class Login extends Component {
         return (
             <div className='Login'>
                 <div className="login-form">
+                    <h1 className='login-title'>Remote Note</h1>
                     <form>
                         <input 
                             type="text" 
