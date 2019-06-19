@@ -70,11 +70,15 @@ module.exports = {
 
         res.status(200).send(premium)
     },
-    getPremiumDetails: async (req, res) => {
+    getAllDetails: async (req, res) => {
         const db = req.app.get('db')
         const { user_id } = req.params
-        const premium_details = await db.get_premium_details({ user_id })
-        res.status(200).send(premium_details)
+        const details = await db.get_all_data()
+        const user_index = details.findIndex(element => {
+            return element.user_id === +user_id
+        })
+        console.log(details[user_index])
+        res.status(200).send(details[user_index])
     }
 }
 

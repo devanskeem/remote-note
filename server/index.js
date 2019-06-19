@@ -35,7 +35,7 @@ app.post('/auth/login', auth_ctrl.login)
 app.post('/auth/register', auth_ctrl.register)
 app.get('/auth/logout', auth_ctrl.logout)
 app.get('/auth/getUserData', auth_ctrl.getUserData)
-app.get('/auth/premium-details/:user_id', auth_ctrl.getPremiumDetails)
+app.get('/auth/all-details/:user_id', auth_ctrl.getAllDetails)
 app.post('/auth/add-premium', auth_ctrl.addPremium)
 app.put('/auth/update-password', auth_ctrl.updatePassword)
 

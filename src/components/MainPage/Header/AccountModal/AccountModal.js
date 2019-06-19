@@ -10,10 +10,10 @@ export class AccountModal extends Component {
         super(props)
 
         this.state = {
-            username: this.props.userReducer.username,
-            firstname: this.props.userReducer.first_name,
-            lastname: this.props.userReducer.last_name,
-            premium: this.props.userReducer.premium,
+            username: '',
+            firstname: '',
+            lastname: '',
+            premium: '',
             phone: '',
             creditsUsed: null,
             password: '',
@@ -23,16 +23,28 @@ export class AccountModal extends Component {
         }
     }
     componentDidMount = () => {
-        axios.get(`/auth/premium-details/${this.props.userReducer.user_id}`).then(res => {
+        axios.get(`/auth/all-details/${this.props.userReducer.user_id}`).then(res => {
             let phone = '+1';
             let creditsUsed = 0;
-            if (res.data[0]) {
-                phone = res.data[0].phone_number
-                creditsUsed = res.data[0].credits_used
+            let username = '';
+            let firstname = '';
+            let lastname = '';
+            let premium = ''
+            if (res.data) {
+                phone = res.data.phone_number
+                creditsUsed = res.data.credits_used
+                username = res.data.username
+                firstname = res.data.first_name
+                lastname = res.data.last_name
+                premium = res.data.premium
             }
             this.setState({
                 phone,
-                creditsUsed
+                creditsUsed,
+                username,
+                firstname,
+                lastname,
+                premium
             })
             this.forceUpdate();
         })
