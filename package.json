@@ -1,7 +1,7 @@
 {
   "name": "remote-note",
   "version": "0.1.0",
-  "proxy": "http://localhost:3005",
+  "proxy": "http://localhost:3333",
   "main": "server/index.js",
   "private": true,
   "dependencies": {

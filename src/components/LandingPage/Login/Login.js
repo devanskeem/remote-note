@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import {Link} from 'react-router-dom'
 import './Login.css'
+import LandingHeader from '../LandingHeader'
+
 export class Login extends Component {
     constructor(props) {
         super(props)
-    
+
         this.state = {
-             username: '',
-             password: ''
+            username: '',
+            password: ''
         }
     }
     handleLoginInput = (e) => {
@@ -18,35 +19,38 @@ export class Login extends Component {
     }
     handleLogin = (e) => {
         e.preventDefault()
-        const {username, password} = this.state
+        const { username, password } = this.state
         axios
-            .post('/auth/login', {username, password})
+            .post('/auth/login', { username, password })
             .then((res) => {
-            this.props.history.push('/dashboard')
+                this.props.history.push('/dashboard')
             })
             .catch(err => alert(err))
     }
     render() {
         return (
-            <div className='Login'>
-                <div className="login-form">
-                    <h1 className='login-title'>Remote Note</h1>
-                    <form>
-                        <input 
-                            type="text" 
-                            name='username' 
-                            placeholder='Username' 
-                            onChange={this.handleLoginInput}
-                        />
-                        <input 
-                            type="password" 
-                            name='password' 
-                            placeholder='Password' 
-                            onChange={this.handleLoginInput}
-                        />
-                        <button onClick={this.handleLogin}>Log In</button>
-                    </form>
-                <Link to='/register'>Register</Link>
+            <div className='login-page'>
+                <LandingHeader />
+                <div className='Login'>
+                    <div className="login-form">
+                        <h1 className='login-title'>Remote Note</h1>
+                        <h3 className='login-name'>Log In</h3>
+                        <form>
+                            <input
+                                type="text"
+                                name='username'
+                                placeholder='Username'
+                                onChange={this.handleLoginInput}
+                            />
+                            <input
+                                type="password"
+                                name='password'
+                                placeholder='Password'
+                                onChange={this.handleLoginInput}
+                            />
+                            <button onClick={this.handleLogin}>Log In</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         )

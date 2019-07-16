@@ -1,11 +1,30 @@
 .LandingPage {
-    background: grey;
+    background: linear-gradient(darkblue, royalblue);
     height: 100vh;
+}
+.landing-header{
+    background: rgba(0, 0, 0, 0.3);
+    height: 100px;
+    width: 100vw;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
 }
 
+.nav{
+    display: flex;
+}
+
+.link{
+    color: white;
+    text-decoration: none;
+    margin: 0 20px 0 10px;
+}
+.title{
+    color: white;
+    margin: 0 20px;
+
+}
 .login{
     height: 500px;
     width: 250px;

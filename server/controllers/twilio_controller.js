@@ -29,6 +29,7 @@ module.exports = {
         const { title, user_id, remind_unix } = req.body;
         const premium_details = await db.get_premium_details({ user_id })
         const millisecondsToReminder = remind_unix - new Date()
+        if(premium_details[0].phone_number){
         setTimeout(() => {
             client.messages
             .create({
@@ -37,6 +38,7 @@ module.exports = {
                 to: premium_details[0].phone_number
             })
         }, millisecondsToReminder)
+        }
         
     }
 }

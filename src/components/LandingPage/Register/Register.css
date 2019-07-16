@@ -1,24 +1,38 @@
-.Register {
-    background: whitesmoke;
-    height: 100vh;
+.register-page {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    flex-direction: column;
+    background: linear-gradient(darkblue, royalblue);
+}
+.Register {
+    background: linear-gradient(darkblue, royalblue);
+    display: flex;
     align-items: center;
+    flex-direction: column;
+    height: 100vh;
 }
 .register-title{
     font-size: 30px;
-    margin: 0;
+    margin-top: 15px;
     color: royalblue;
+}
+
+
+.register-name{
+    font-size: 20px;
+    margin: 0;
+    color: darkblue;
 }
 .register-form{
     height: 250px;
     width: 250px;
+    margin-top: 8%;
     background: white;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-evenly;
     border: 1px solid royalblue;
+    box-shadow: 1px 1px 4px 2px rgba(0, 0, 0, .4)
 }
 
 .register-form form{

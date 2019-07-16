@@ -32,6 +32,7 @@ export class Dashboard extends Component {
     }
 
     componentDidMount() {
+
         window.addEventListener('resize', this.resize)
         axios.get('/auth/getUserData').then((res) => {
             this.props.updateUser(res.data)
