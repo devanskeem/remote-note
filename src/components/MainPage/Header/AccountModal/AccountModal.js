@@ -23,30 +23,21 @@ export class AccountModal extends Component {
         }
     }
     componentDidMount = () => {
-        axios.get(`/auth/all-details/${this.props.userReducer.user_id}`).then(res => {
-            let phone = '+1';
-            let creditsUsed = 0;
-            let username = '';
-            let firstname = '';
-            let lastname = '';
-            let premium = ''
-            if (res.data) {
-                phone = res.data.phone_number
-                creditsUsed = res.data.credits_used
-                username = res.data.username
-                firstname = res.data.first_name
-                lastname = res.data.last_name
-                premium = res.data.premium
-            }
-            this.setState({
-                phone,
-                creditsUsed,
-                username,
-                firstname,
-                lastname,
-                premium
+        axios.get(`/auth/getUserData/`).then(res => {
+             this.setState({
+                username: res.data.username, 
+                firstname: res.data.first_name,
+                lastname: res.data.last_name
             })
-            this.forceUpdate();
+            if (res.data.premium) {
+                axios.get(`/auth/all-details`).then(res => {
+                    this.setState({
+                        premium: true,
+                        creditsUsed: res.data.credits_used,
+                        phone: res.data.phone_number
+                    })
+                })
+            }
         })
     }
 
@@ -122,6 +113,7 @@ export class AccountModal extends Component {
                                             <p className='subscription'>Subscription: Premium</p>
                                             <p className="phone-number">Phone Number: {this.state.phone}</p>
                                             <p className="credits">Credits Remaining: {250 - this.state.creditsUsed}</p>
+                                            <p className='phone-number'>Send notes to: (612) 712-6683</p>
                                         </div>
                                         : <button className='get-premium-btn' onClick={this.toggleStripe}>Get Premium</button>
                                     }

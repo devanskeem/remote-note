@@ -72,13 +72,11 @@ module.exports = {
     },
     getAllDetails: async (req, res) => {
         const db = req.app.get('db')
-        const { user_id } = req.params
-        const details = await db.get_all_data()
-        const user_index = details.findIndex(element => {
-            return element.user_id === +user_id
-        })
-        console.log(details[user_index])
-        res.status(200).send(details[user_index])
+        const { user } = req.session
+        console.log('user.id', user.id)
+        const details = await db.get_premium_data(user.id)
+        console.log(details)
+        res.status(200).send(details[0])
     }
 }
 
