@@ -73,9 +73,7 @@ module.exports = {
     getAllDetails: async (req, res) => {
         const db = req.app.get('db')
         const { user } = req.session
-        console.log('user.id', user.id)
         const details = await db.get_premium_data(user.id)
-        console.log(details)
         res.status(200).send(details[0])
     }
 }
